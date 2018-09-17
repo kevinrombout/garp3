@@ -217,8 +217,9 @@ class Garp_Auth_Adapter_Passwordless extends Garp_Auth_Adapter_Abstract {
     }
 
     protected function _getExpirationDate() {
-        if ($this->_getAuthVars() && array_key_exists('token_expires_in', $this->_getAuthVars())) {
-            $authVars = $this->_getAuthVars();
+        $authVars = $this->_getAuthVars();
+        if ($authVars && array_key_exists('token_expires_in', $authVars->toArray())) {
+            $authVars = $authVars->toArray();
             return date('Y-m-d H:i:s', strtotime($authVars['token_expires_in']));
         }
         return date('Y-m-d H:i:s', strtotime(self::DEFAULT_TOKEN_EXPIRATION_TIME));
